@@ -1,6 +1,12 @@
 <?php
 
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Backend\backEndController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +21,19 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', [FrontendController::class, 'index'])->name('Front.index');
 Route::get('/single-post', [FrontendController::class, 'single'])->name('Front.single');
 
+route::group(['prefix'=>'dashboard'], function(){
+    Route::get('/admin', [BackEndController::class, 'index'])->name('Backend.index');
+    Route::resource('category', CategoryController::class);
+    Route::resource('tag', TagController::class);
+    Route::resource('sub_category', SubCategoryController::class);
+    Route::resource('post', PostController::class);
+});
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('Backend.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

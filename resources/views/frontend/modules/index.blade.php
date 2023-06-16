@@ -3,6 +3,7 @@
 @section('banner')
     @include('frontend.includes.banner')
 @endsection
+@section('single-post')
 @section('content')
     <div class="col-lg-12">
         <div class="blog-post">
