@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    {!! Form::open(['method' => 'Post', 'route' => 'post.store']) !!}
+                    {!! Form::open(['method' => 'Post', 'route' => 'post.store', 'files'=>'true']) !!}
                     {!! Form::label('title', 'Title', ['class' => 'my-2']) !!}
                     {!! Form::text('title', null, [
                         'id' => 'title',
@@ -62,7 +62,7 @@
                 <div class="row">
                     @foreach ($tags as $tag)
                       <div class="col-md-3">
-                        {!! Form::checkbox('tag_id', $tag->id, false) !!} <span>{{ $tag->name }}</span>
+                        {!! Form::checkbox('tag_ids[]', $tag->id, false) !!} <span>{{ $tag->name }}</span>
                       </div>
                     @endforeach
                  </div>
@@ -106,7 +106,7 @@
                let sub_category_element = $('#sub_category_id');
                sub_category_element.empty();
                sub_category_element.append('<option selected = "selected"> Select Sub Category </option>');
-               axios.get(window.location.origin+'/dashboard/sub_category/'+ category_id).then(res=>{
+               axios.get(window.location.origin+'/dashboard/get-subcategory/'+ category_id).then(res=>{
                 sub_categories = res.data
                 sub_categories.map((sub_category, index)=>(
                     sub_category_element.append(`<option value = "${sub_category.id}"> ${sub_category.name} </option>`)
