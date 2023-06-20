@@ -49,6 +49,7 @@
                         </div>
                         <div class="col-md-6">
                             {!! Form::label('sub_category_id', 'Select Sub Category', ['class' => 'my-2']) !!}
+
                             <select name="sub_category_id" class="form-select" id="sub_category_id">
                                 <option selected = "selected"> Select Sub Category </option>
                             </select>
