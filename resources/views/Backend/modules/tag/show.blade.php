@@ -9,40 +9,40 @@
                     <h4>Category Details</h4>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-bordered table-hover">
+                    <table class="table table-striped table-bordered table-hover table-sm">
                         <tbody>
                             <tr>
                                 <th>ID</th>
-                                <th>{{ $category->id }}</th>
+                                <th>{{ $tag->id }}</th>
                             </tr>
                             <tr>
                                 <th>Name</th>
-                                <td>{{ $category->name }}</td>
+                                <td>{{ $tag->name }}</td>
                             </tr>
                             <tr>
                                 <th>Slug</th>
-                                <td>{{ $category->slug }}</td>>
+                                <td>{{ $tag->slug }}</td>>
                             </tr>
                             <tr>
                                 <th>Status</th>
-                                <td>{{ $category->status == 1 ? 'Active' : 'Inactive' }}</td>
+                                <td>{{ $tag->status == 1 ? 'Active' : 'Inactive' }}</td>
                             </tr>
                             <tr>
                                 <th>Order By</th>
-                                <td>{{ $category->order_by }}</td>
+                                <td>{{ $tag->order_by }}</td>
                             </tr>
                             <tr>
                                 <th>Created At</th>
-                                <td>{{ $category->created_at->toDayDateTimeString() }}</td>
+                                <td>{{ $tag->created_at->toDayDateTimeString() }}</td>
                             </tr>
                             <tr>
                                 <th>Uploadted At</th>
-                                <td>{{ $category->created_at != $category->updated_at ? $category->updated_at->toDayDateTimeString() : 'Not Updated' }}
+                                <td>{{ $tag->created_at != $tag->updated_at ? $tag->updated_at->toDayDateTimeString() : 'Not Updated' }}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <a href="{{ route('category.index') }}" class="btn btn-info btn-sm text-light"> Back </a>
+                    <a href="{{ route('tag.index') }}" class="btn btn-info btn-sm text-light"> Back </a>
                 </div>
             </div>
         </div>
