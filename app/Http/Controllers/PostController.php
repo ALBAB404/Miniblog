@@ -8,6 +8,7 @@ use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PostCreateRequest;
 
 class PostController extends Controller
@@ -74,7 +75,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::where('status', 1)->pluck('name','id');
+        $tags = Tag::where('status', 1)->select('name','id')->get();
+        $selected_tags = DB::table('post_tag')->where('post_id', $post->id)->pluck('tag_id')->toArray();
+        // dd($selected_tags);
+        return view('Backend.modules.post.edit', compact('post', 'categories', 'tags','selected_tags'));
     }
 
     /**

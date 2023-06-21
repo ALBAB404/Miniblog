@@ -21,55 +21,7 @@
                     @endif
 
                     {!! Form::open(['method' => 'Post', 'route' => 'post.store', 'files'=>'true']) !!}
-                    {!! Form::label('title', 'Title', ['class' => 'my-2']) !!}
-                    {!! Form::text('title', null, [
-                        'id' => 'title',
-                        'class' => 'form-control',
-                        'placeholder' => 'Enter Post Title',
-                    ]) !!}
-                    {!! Form::label('slug', 'Slug', ['class' => 'my-2']) !!}
-                    {!! Form::text('slug', null, [
-                        'id' => 'slug',
-                        'class' => 'form-control ',
-                        'placeholder' => 'Enter Post Slug',
-                    ]) !!}
-                    {!! Form::label('status', 'Post Status', ['class' => 'my-2']) !!}
-                    {!! Form::select('status', [1 => 'Active', 0 => 'Inactive'], null, [
-                        'class' => 'form-control ',
-                        'placeholder' => 'Enter Post status',
-                    ]) !!}
-                    <div class="row">
-                        <div class="col-md-6">
-                            {!! Form::label('category_id', 'Select Category', ['class' => 'my-2']) !!}
-                            {!! Form::select('category_id', $categories, null, [
-                                'id' => 'category_id',
-                                'class' => 'form-select',
-                                'placeholder' => 'Select Parent Category',
-                            ]) !!}
-                        </div>
-                        <div class="col-md-6">
-                            {!! Form::label('sub_category_id', 'Select Sub Category', ['class' => 'my-2']) !!}
-                            <select name="sub_category_id" class="form-select" id="sub_category_id">
-                                <option selected = "selected"> Select Sub Category </option>
-                            </select>
-                        </div>
-                    </div>
-                    {!! Form::label('discription', 'Discription', ['class' => 'my-2']) !!}
-                    {!! Form::textarea('discription', null, ['id'=>'discription','class' => 'form-control','placeholder' => 'Type Something Short Discription']) !!}
-
-                    {!! Form::label('tag', 'Select Tag', ['class' => 'my-2']) !!}
-                </br>
-                <div class="row">
-                    @foreach ($tags as $tag)
-                      <div class="col-md-3">
-                        {!! Form::checkbox('tag_ids[]', $tag->id, false) !!} <span>{{ $tag->name }}</span>
-                      </div>
-                    @endforeach
-                 </div>
-
-                    {!! Form::label('photo', 'Select Photo', ['class' => 'mt-2']) !!}
-                    {!! Form::file('photo', ['class'=> 'form-control']) !!}
-
+                    @include('Backend.modules.post.form')
                     {!! Form::button('Create Post', ['type' => 'submit', 'class' => 'btn btn-success mt-3']) !!}
                     {!! Form::close() !!}
 
@@ -101,7 +53,11 @@
                 } );
 
             $('#category_id').on('change', function() {
-               let category_id = $(this).val();
+                get_sub_categories()
+            })
+
+            const get_sub_categories = () => {
+                let category_id = $('#category_id').val();
                let sub_categories
                let sub_category_element = $('#sub_category_id');
                sub_category_element.empty();
@@ -112,7 +68,7 @@
                     sub_category_element.append(`<option value = "${sub_category.id}"> ${sub_category.name} </option>`)
                     ))
                })
-            })
+            }
 
             $('#title').on('input', function() {
                 let name = $(this).val()
