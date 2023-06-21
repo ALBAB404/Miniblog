@@ -61,6 +61,22 @@
                         <a class="nav-link" href="{{ route('tag.create') }}">Add Tag</a>
                     </nav>
                 </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#post"
+                aria-expanded="false" aria-controls="collapseLayouts">
+                <div class="sb-nav-link-icon">
+                    <i class="fas fa-columns"></i>
+                </div>
+                Post
+                <div class="sb-sidenav-collapse-arrow">
+                    <i class="fas fa-angle-down"></i>
+                </div>
+                </a>
+                <div class="collapse" id="post" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ route('post.index') }}">List Post</a>
+                        <a class="nav-link" href="{{ route('post.create') }}">Add Post</a>
+                    </nav>
+                </div>
                 <div class="sb-sidenav-menu-heading">Addons</div>
                 <a class="nav-link" href="tables.html">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>

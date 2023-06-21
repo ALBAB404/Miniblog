@@ -1,0 +1,14 @@
+.sidebar-sub-category{
+    padding-left: 30px;
+}
+.sidebar-sub-category li{
+    padding: 5px 0 !important;
+    margin: 0 !important;
+}
+.sidebar-sub-category li a {
+    font-size: 14px !important;
+    color: gray !important;
+}
+.sidebar-sub-category li a:hover {
+    color: #f48840 !important;
+}

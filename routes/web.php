@@ -22,7 +22,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', [FrontendController::class, 'index'])->name('Front.index');
+Route::get('/category/{slug}', [FrontendController::class, 'index'])->name('Front.category');
+Route::get('/tag/{slug}', [FrontendController::class, 'index'])->name('Front.tag');
+Route::get('/category/{cat_slug}/{sub_cat_slug}', [FrontendController::class, 'index'])->name('Front.sub_category');
 Route::get('/single-post', [FrontendController::class, 'single'])->name('Front.single');
+Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('Front.single');
 
 route::group(['prefix'=>'dashboard'], function(){
     Route::get('/admin', [BackEndController::class, 'index'])->name('Backend.index');

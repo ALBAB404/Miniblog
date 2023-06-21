@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    {!! Form::model($post, ['method' => 'PUT', 'route' => ['post.update', $post->id]]) !!}
+                    {!! Form::model($post, ['method' => 'PUT', 'route' => ['post.update', $post->id], 'files'=> true]) !!}
                     @include('Backend.modules.post.form')
                     {!! Form::button('Update Post', ['type' => 'submit', 'class' => 'btn btn-success mt-2']) !!}
                     {!! Form::close() !!}
