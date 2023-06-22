@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-@section('Page_title', 'All Post')
+@section('Page_title', $title)
 @section('banner')
     <div class="heading-page header-text">
         <section class="page-heading">
@@ -7,8 +7,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-content">
-                            <h4>All Post</h4>
-                            <h2>View Post List</h2>
+                            <h4>{{ $sub_title }}</h4>
+                            <h2>{{ $title }}</h2>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                 <img src="{{ url('image/post/Original/'.$post->photo) }}" alt="{{ $post->title }}">
             </div>
             <div class="down-content">
-                <span>{{ $post->category?->name }}</span>
+                <span>{{ $post->category?->name }} <sub class="text-warning">{{ $post->sub_category?->name }}</sub></span>
                 <a href="{{ route('Front.single', $post->slug) }}">
                     <h4>{{ $post->title }}</h4>
                 </a>
@@ -59,6 +59,10 @@
         </div>
     </div>
     @endforeach
+
+    @if(count($posts) < 1)
+        <h1 class="text-danger">No Post Found</h1>
+    @endif
 
     <div class="col-md-12">
         {{ $posts->links() }}

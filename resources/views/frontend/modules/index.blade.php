@@ -12,7 +12,7 @@
                 <img src="{{ url('image/post/Original/'.$post->photo) }}" alt="{{ $post->title }}">
             </div>
             <div class="down-content">
-                <span>{{ $post->category?->name }}</span>
+                <span>{{ $post->category?->name }} <sub class="text-warning">{{ $post->sub_category?->name }}</sub></span>
                 <a href="{{ route('Front.single', $post->slug) }}">
                     <h4>{{ $post->title }}</h4>
                 </a>
