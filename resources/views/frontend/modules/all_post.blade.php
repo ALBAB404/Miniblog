@@ -1,9 +1,21 @@
 @extends('frontend.layout.master')
-@section('Page_title', 'Welcome')
+@section('Page_title', 'All Post')
 @section('banner')
- @include('frontend.includes.banner')
+    <div class="heading-page header-text">
+        <section class="page-heading">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-content">
+                            <h4>All Post</h4>
+                            <h2>View Post List</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 @endsection
-@section('single-post')
 @section('content')
 @foreach($posts as $post)
     <div class="col-lg-12">
@@ -47,9 +59,9 @@
         </div>
     </div>
     @endforeach
-    <div class="col-lg-12">
-        <div class="main-button">
-            <a href="{{ route('Front.all_post') }}">View All Posts</a>
-        </div>
+
+    <div class="col-md-12">
+        {{ $posts->links() }}
     </div>
+
 @endsection

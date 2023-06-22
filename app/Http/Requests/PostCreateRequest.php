@@ -26,7 +26,7 @@ class PostCreateRequest extends FormRequest
             'slug' => 'required|min:3|max:255|unique:posts',
             'status' => 'required',
             'category_id' => 'required',
-            'sub_category_id' => 'required',
+            'sub_category_id' => 'required|numeric',
             'discription' => 'required|min:20',
             'photo' => 'required',
             'tag_ids' => 'required',
