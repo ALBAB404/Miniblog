@@ -27,5 +27,9 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function comment()
+    {
+        return $this->hasMany(Comment::class)->whereNull('comment_id');   //whereNull use kora hoise karon database a jader id null ase tader ta e show hobe tar mane hocche comments jara korse tader ta show hobe but jara reply korse tader ta show hobe
+    }
 
 }

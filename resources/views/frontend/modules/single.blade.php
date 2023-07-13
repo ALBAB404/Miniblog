@@ -21,38 +21,29 @@
     <div class="col-lg-12">
         <div class="blog-post">
             <div class="blog-thumb">
-                <img src="{{ asset('frontend') }}/assets/images/blog-post-02.jpg" alt="">
+                <img src="{{ url('image/post/Original/'.$post->photo) }}" alt="{{ $post->title }}">
             </div>
             <div class="down-content">
-                <span>Lifestyle</span>
-                <a href="post-details.html">
-                    <h4>Aenean pulvinar gravida sem nec</h4>
+                <span>{{ $post->category?->name }} <sub class="text-warning">{{ $post->sub_category?->name }}</sub></span>
+                <a href="{{ route('Front.single', $post->slug) }}">
+                    <h4>{{ $post->title }}</h4>
                 </a>
                 <ul class="post-info">
-                    <li><a href="#">Admin</a></li>
-                    <li><a href="#">May 12, 2020</a></li>
-                    <li><a href="#">10 Comments</a></li>
+                    <li><a href="#">{{ $post->user?->name }}</a></li>
+                    <li><a href="#">{{ $post->created_at->format('M d, Y') }}</a></li>
+                    <li><a href="#">12 Comments</a></li>
                 </ul>
-                <p>You can browse different tags such as <a rel="nofollow" href="https://templatemo.com/tag/multi-page"
-                        target="_parent">multi-page</a>, <a rel="nofollow" href="https://templatemo.com/tag/resume"
-                        target="_parent">resume</a>, <a rel="nofollow" href="https://templatemo.com/tag/video"
-                        target="_parent">video</a>, etc. to see more CSS templates. Sed hendrerit rutrum arcu, non malesuada
-                    nisi. Sed id facilisis turpis. Donec justo elit, dapibus vel ultricies in, molestie sit amet risus. In
-                    nunc augue, rhoncus sed libero et, tincidunt tempor nisl. Donec egestas, quam eu rutrum ultrices, sapien
-                    ante posuere nisl, ac eleifend eros orci vel ante. Pellentesque vitae eleifend velit. Etiam blandit
-                    felis sollicitudin vestibulum feugiat.
-                    <br><br>Donec tincidunt leo nec magna gravida varius. Suspendisse felis orci, egestas ac sodales quis,
-                    venenatis et neque. Vivamus facilisis dignissim arcu et blandit. Maecenas finibus dui non pulvinar
-                    lacinia. Ut lacinia finibus lorem vel porttitor. Suspendisse et metus nec libero ultrices varius eget in
-                    risus. Cras id nibh at erat pulvinar malesuada et non ipsum. Suspendisse id ipsum leo.
-                </p>
+                <div class="post_description">
+                    <p>{!! $post->discription !!}</p>
+                </div>
                 <div class="post-options">
                     <div class="row">
                         <div class="col-6">
                             <ul class="post-tags">
                                 <li><i class="fa fa-tags"></i></li>
-                                <li><a href="#">Best Templates</a>,</li>
-                                <li><a href="#">TemplateMo</a></li>
+                                @foreach ($post->tag as $tag)
+                                <li><a href="{{ route('Front.tag', $tag->slug) }}">{{ $tag->name }}</a>,</li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="col-6">
@@ -74,47 +65,35 @@
             </div>
             <div class="content">
                 <ul>
-                    <li>
+                    @foreach ($post->comment as $comment )
+                       <li>
                         <div class="author-thumb">
                             <img src="{{ asset('frontend') }}/assets/images/comment-author-01.jpg" alt="">
                         </div>
                         <div class="right-content">
-                            <h4>Charles Kate<span>May 16, 2020</span></h4>
-                            <p>Fusce ornare mollis eros. Duis et diam vitae justo fringilla condimentum eu quis leo.
-                                Vestibulum id turpis porttitor sapien facilisis scelerisque. Curabitur a nisl eu lacus
-                                convallis eleifend posuere id tellus.</p>
-                        </div>
-                    </li>
-                    <li class="replied">
-                        <div class="author-thumb">
-                            <img src="{{ asset('frontend') }}/assets/images/comment-author-02.jpg" alt="">
-                        </div>
-                        <div class="right-content">
-                            <h4>Thirteen Man<span>May 20, 2020</span></h4>
-                            <p>In porta urna sed venenatis sollicitudin. Praesent urna sem, pulvinar vel mattis eget.</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="author-thumb">
-                            <img src="{{ asset('frontend') }}/assets/images/comment-author-03.jpg" alt="">
-                        </div>
-                        <div class="right-content">
-                            <h4>Belisimo Mama<span>May 16, 2020</span></h4>
-                            <p>Nullam nec pharetra nibh. Cras tortor nulla, faucibus id tincidunt in, ultrices eget ligula.
-                                Sed vitae suscipit ligula. Vestibulum id turpis volutpat, lobortis turpis ac, molestie nibh.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="replied">
-                        <div class="author-thumb">
-                            <img src="{{ asset('frontend') }}/assets/images/comment-author-02.jpg" alt="">
-                        </div>
-                        <div class="right-content">
-                            <h4>Thirteen Man<span>May 22, 2020</span></h4>
-                            <p>Mauris sit amet justo vulputate, cursus massa congue, vestibulum odio. Aenean elit nunc,
-                                gravida in erat sit amet, feugiat viverra leo.</p>
-                        </div>
-                    </li>
+                            <h4>{{ $comment->user?->name }}<span>{{ $comment->created_at->format('M d, Y') }}</span></h4>
+                            <p>{{ $comment->comment }}</p>
+                            <h4 class="mt-2">Reply Comment</h4>
+                            {!! Form::open(['method'=>'post','route'=>'comment.store']) !!}
+                            {!! Form::text('comment', null, ['class'=>'form-control form-control-sm mt-2', 'placeholder'=>'Write Your Reply Here']) !!}
+                            {!! Form::hidden('comment_id', $comment->id) !!}
+                            {!! Form::hidden('post_id', $post->id) !!}
+                            {!! Form::button('Reply',['class'=>'btn btn-outline-warning mt-2','type'=>'submit']) !!}
+                            {!! Form::close() !!}
+                            </div>
+                        </li>
+                        @foreach ($comment->reply as $reply)
+                        <li class="replied">
+                            <div class="author-thumb">
+                                <img src="{{ asset('frontend') }}/assets/images/comment-author-02.jpg" alt="">
+                            </div>
+                            <div class="right-content">
+                                <h4>{{ $reply->user?->name }}<span>{{ $reply->created_at->format('M d, Y') }}</span></h4>
+                                <p>{{ $reply->comment }}</p>
+                            </div>
+                        </li>
+                        @endforeach
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -125,32 +104,13 @@
                 <h2>Your comment</h2>
             </div>
             <div class="content">
-                <form id="comment" action="#" method="post">
+                <form method="post" action="{{ route('comment.store') }}">
+                    @csrf
                     <div class="row">
-                        <div class="col-md-6 col-sm-12">
-                            <fieldset>
-                                <input name="name" type="text" id="name" placeholder="Your name" required="">
-                            </fieldset>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <fieldset>
-                                <input name="email" type="text" id="email" placeholder="Your email" required="">
-                            </fieldset>
-                        </div>
                         <div class="col-md-12 col-sm-12">
-                            <fieldset>
-                                <input name="subject" type="text" id="subject" placeholder="Subject">
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                            <fieldset>
-                                <textarea name="message" rows="6" id="message" placeholder="Type your comment" required=""></textarea>
-                            </fieldset>
-                        </div>
-                        <div class="col-lg-12">
-                            <fieldset>
-                                <button type="submit" id="form-submit" class="main-button">Submit</button>
-                            </fieldset>
+                                <input name="post_id" type="hidden" value="{{ $post->id }}">
+                                <textarea name="comment" rows="6" id="message" placeholder="Type your comment"></textarea>
+                                <button type="submit" class="main-button">Submit </button>
                         </div>
                     </div>
                 </form>
@@ -158,3 +118,25 @@
         </div>
     </div>
 @endsection
+@if(session('msg'))
+    @push('js')
+        <script>
+            $('.delete').on('click', function() {
+                let id = $(this).attr('data-id')
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(`#form_${id}`).submit()
+                    }
+                })
+            })
+        </script>
+    @endpush
+@endif

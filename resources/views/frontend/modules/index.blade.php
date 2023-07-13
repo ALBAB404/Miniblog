@@ -22,7 +22,10 @@
                     <li><a href="#">12 Comments</a></li>
                 </ul>
                 <div>
-                    <p>{!!  Str::limit($post->discription, 200) !!}</p>
+                    <p>{!!  Str::limit($post->discription, 500)."......." !!}
+                        <a href="{{ Route('Front.single', $post->slug) }}" class="btn btn-sm btn-warning">Read More</a>
+                    </p>
+
                 </div>
                 <div class="post-options">
                     <div class="row">

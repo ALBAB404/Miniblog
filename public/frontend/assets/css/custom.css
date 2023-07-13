@@ -12,9 +12,46 @@
 .sidebar-sub-category li a:hover {
     color: #f48840 !important;
 }
-
+.item{
+    position: relative;
+}
 .item img{
     width: 100%;
     height: 300px;
     object-fit: cover;
+    position: relative !important;
+}
+.item::before{
+    content:'';
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    opacity: 0.6;
+}
+.item-content{
+    position: relative;
+    z-index: 99;
+}
+
+.swal2-container.swal2-top-end.swal2-backdrop-show {
+    z-index: 99999 !important;
+}
+
+.author-thumb img{
+    width: 75px;
+    border-radius: 50%;
+}
+
+.blog-posts .comments ul li .right-content {
+    margin-left: 100px;
+}
+.blog-posts .down-content p {
+    /* padding: 25px 0px; */
+    margin: 25px 0px !important;
+    /* border-top: 1px solid #eee; */
+    /* border-bottom: 1px solid #eee; */
 }

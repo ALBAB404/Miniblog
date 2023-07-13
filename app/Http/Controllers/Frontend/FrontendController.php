@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
@@ -18,9 +20,14 @@ class FrontendController extends Controller
 
         return view('frontend.modules.index', compact('posts','banner_posts'));
     }
-    public function single()
+    public function single(string $slug)
     {
-        return view('frontend.modules.single');
+        $post = Post::with('category', 'sub_category', 'user', 'tag', 'comment', 'comment.user', 'comment.reply')
+        ->where('is_approved', 1 )
+        ->where('status', 1)
+        ->where('slug', $slug)
+        ->firstOrFail();
+        return view('frontend.modules.single', compact('post'));
     }
 
     public function all_post()
@@ -79,19 +86,23 @@ class FrontendController extends Controller
     }
     public function tag($slug)
     {
-    //     $sub_category = SubCategory::where('slug', $sub_slug)->first();
-    //     if ($sub_category) {
-    //         $posts =Post::with('category', 'sub_category', 'tag', 'user')
-    //         ->where('is_approved', 1)
-    //         ->where('status', 1)
-    //         ->where('sub_category_id', $sub_category->id)
-    //         ->latest()
-    //         ->paginate(2);
-    //     }
-    //     $title = $sub_category->name;
-    //     $sub_title = 'Post By Sub Category';
+        $tag = Tag::where('slug', $slug)->first();
+        $post_ids = DB::table('post_tag')->where('tag_id', $tag->id)->distinct('post_id')->pluck('post_id');
+        if ($tag) {
+            $posts =Post::with('category', 'sub_category', 'tag', 'user')
+            ->where('is_approved', 1)
+            ->where('status', 1)
+            ->whereIn('id', $post_ids)
+            ->latest()
+            ->paginate(2);
+        }
+        $title = $tag->name;
+        $sub_title = 'Post By Sub Category';
 
-    //     return view('frontend.modules.all_post', compact('posts', 'title','sub_title'));
-    //
+        return view('frontend.modules.all_post', compact('posts', 'title','sub_title'));
+
     }
+
+
+
 }

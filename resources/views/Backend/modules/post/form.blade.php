@@ -58,16 +58,21 @@
 
 
 @push('css')
-<style>
+{{-- <style>
     .ck.ck-editor__main>.ck-editor__editable{
         min-height: 200px;
         border-color: var(--ck-color-base-border);
     }
-</style>
+</style> --}}
+
 @endpush
 
 @push('js')
-<script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+{{-- <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script> --}}
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+
+</script>
 
 <script>
 
@@ -99,14 +104,20 @@ const get_sub_categories = (category_id) => {
 
 
 
-    ClassicEditor
-        .create( document.querySelector( '#discription' ) )
-        .then( editor => {
-                console.log( editor );
-        } )
-        .catch( error => {
-                console.error( error );
-        } );
+    // ClassicEditor
+    //     .create( document.querySelector( '#discription' ) )
+    //     .then( editor => {
+    //             console.log( editor );
+    //     } )
+    //     .catch( error => {
+    //             console.error( error );
+    //     } );
+
+    tinymce.init({
+    selector: '#discription', // Replace this CSS selector to match the placeholder element for TinyMCE
+    plugins: 'code table lists',
+    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table'
+  });
 
     $('#category_id').on('change', function() {
         let category_id = $('#category_id').val();

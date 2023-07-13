@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Backend\backEndController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\PostController;
@@ -30,13 +31,16 @@ Route::get('/category/{cat_slug}/{sub_cat_slug}', [FrontendController::class, 's
 Route::get('/single-post', [FrontendController::class, 'single'])->name('Front.single');
 Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('Front.single');
 
-route::group(['prefix'=>'dashboard'], function(){
+
+
+route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/admin', [BackEndController::class, 'index'])->name('Backend.index');
     Route::resource('category', CategoryController::class);
     Route::resource('tag', TagController::class);
     Route::get('get-subcategory/{id}', [SubCategoryController::class, 'getSubCategoryIdByCategoryId']);
     Route::resource('sub_category', SubCategoryController::class);
     Route::resource('post', PostController::class);
+    Route::resource('comment', CommentController::class);
 });
 
 Route::get('/dashboard', function () {
