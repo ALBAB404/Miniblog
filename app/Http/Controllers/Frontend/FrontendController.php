@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\Function_;
 
 class FrontendController extends Controller
 {
@@ -101,6 +102,11 @@ class FrontendController extends Controller
 
         return view('frontend.modules.all_post', compact('posts', 'title','sub_title'));
 
+    }
+
+    final public Function contact_us()
+    {
+        return view('frontend.modules.contact_us');
     }
 
 

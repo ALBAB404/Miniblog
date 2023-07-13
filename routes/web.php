@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Backend\backEndController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\PostController;
@@ -30,6 +31,8 @@ Route::get('/tag/{slug}', [FrontendController::class, 'tag'])->name('Front.tag')
 Route::get('/category/{cat_slug}/{sub_cat_slug}', [FrontendController::class, 'sub_category'])->name('Front.sub_category');
 Route::get('/single-post', [FrontendController::class, 'single'])->name('Front.single');
 Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('Front.single');
+ROUTE::get('contact-us', [FrontendController::class, 'contact_us'])->name('contact-us');
+ROUTE::post('contact-us', [ContactController::class, 'store'])->name('contact.store');
 
 
 
