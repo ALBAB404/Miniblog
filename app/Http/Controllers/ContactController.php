@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendContactMail;
+use App\Mail\ContactMail;
 use App\Models\contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -35,9 +38,10 @@ class ContactController extends Controller
             'subject'=>'required',
             'massage'=>'required',
         ]);
-        contact::create($request->all());
+        $contact =  contact::create($request->all());
         session()->flash('cls','info');
         session()->flash('msg','Your Comment Posted Successfully');
+        SendContactMail::dispatch($contact->toArray());
         return redirect()->back();
     }
 
