@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\backEndController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\PostController;
@@ -33,6 +34,8 @@ Route::get('/single-post', [FrontendController::class, 'single'])->name('Front.s
 Route::get('/single-post/{slug}', [FrontendController::class, 'single'])->name('Front.single');
 ROUTE::get('contact-us', [FrontendController::class, 'contact_us'])->name('contact-us');
 ROUTE::post('contact-us', [ContactController::class, 'store'])->name('contact.store');
+ROUTE::get('get-district/{division_id}', [MyProfileController::class, 'getDistrictByDivision']);
+ROUTE::get('get-thana/{thana_id}', [MyProfileController::class, 'getDivisionByThana']);
 
 
 
@@ -44,6 +47,7 @@ route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::resource('sub_category', SubCategoryController::class);
     Route::resource('post', PostController::class);
     Route::resource('comment', CommentController::class);
+    Route::resource('myprofile', MyProfileController::class);
 });
 
 Route::get('/dashboard', function () {
