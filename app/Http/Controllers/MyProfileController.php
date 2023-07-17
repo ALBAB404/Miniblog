@@ -6,8 +6,10 @@ use App\Models\district;
 use App\Models\division;
 use App\Models\MyProfile;
 use App\Models\thana;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class MyProfileController extends Controller
 {
@@ -94,4 +96,38 @@ class MyProfileController extends Controller
         $districts =  thana::where('district_id', $thana_id)->select('name','id')->get()->toArray();
         return response()->json($districts);
     }
+
+    public function upload_photo(Request $request)
+    {
+        $photo =    $request->input('photo');
+        $name = Str::slug(Auth::user()->name.Carbon::now());
+        $height = 200;
+        $width = 200;
+        $path = 'image/user/';
+
+        $profile = MyProfile::where('user_id',Auth::id())->first();
+        if($profile?->photo){
+            PhotoUploadController::imageUnlink($path, $profile->photo);
+        }
+
+        $image_name =  PhotoUploadController::imageUpload($name,$height,$width,$path,$photo);
+
+        $profile_data['photo'] = $image_name;
+
+        if($profile){
+            $profile->update($profile_data);
+            return response()->json([
+                'msg' => 'Profile Photo Upload Successfully',
+                'cls'=> 'success',
+                'photo' =>  url($path.$profile->photo)
+            ]);
+        }
+
+        return response()->json([
+            'msg' => 'Please Upload Profile First',
+            'cls'=> 'warning',
+        ]);
+
+    }
+
 }

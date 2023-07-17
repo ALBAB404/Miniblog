@@ -47,6 +47,7 @@ route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::resource('sub_category', SubCategoryController::class);
     Route::resource('post', PostController::class);
     Route::resource('comment', CommentController::class);
+    ROUTE::post('upload-photo', [MyProfileController::class, 'upload_photo']);
     Route::resource('myprofile', MyProfileController::class);
 });
 

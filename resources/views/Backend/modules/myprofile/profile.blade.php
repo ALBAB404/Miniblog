@@ -3,7 +3,7 @@
 @section('page_sub_title', 'Update')
 @section('contant')
     <div class="row justify-content-center">
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
                     <h4>Update Profile</h4>
@@ -60,14 +60,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="m-0">Profile Photo</h3>
+                    <h3 class="mb-0">Profile Photo</h3>
                 </div>
                 <div class="card-body">
-                    <label for="">Upload Profile Photo</label>
-                    <input type="file">
+                    <img src="{{ asset('image/user/'.$profile->photo) }}" class="img-thumbnail" id="previous_image" style="{{ $profile->photo != null ? 'display:block' : 'display:none' }}">
+                    <label for="" class="my-2">Upload Profile Photo</label>
+                    <form action="">
+                        <input type="file" id="image_input" class="form-control">
+                        <button class="d-none" id="reset" type="reset"></button>
+                    </form>
+                    <p class="text-danger" id="errorMassage"></p>
+                    <button style="width: 100px" class="btn btn-success my-3" id="image_upload_button">Upload</button>
+                    <img class="img-thumbnail" id="image_preview">
+
                 </div>
             </div>
         </div>
@@ -83,8 +91,55 @@
 @endsection
 
 @push('js')
-    <script>
 
+    <script>
+        let photo
+        $('#image_input').on('change', function(e){
+           let file =  e.target.files[0]
+           let reader = new FileReader()
+           reader.onloadend = () => {
+                photo = reader.result
+                $('#image_preview').attr('src', photo)
+           }
+           reader.readAsDataURL(file)
+        })
+
+        let is_loading = false
+
+        const handleLoading = () => {
+            if (is_loading) {
+                $('#image_upload_button').html(`<div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>`);
+            }else{
+                $('#image_upload_button').html('Upload');
+            }
+        }
+
+        $('#image_upload_button').on('click', function (){
+            if (photo != undefined) {
+                is_loading = true
+                handleLoading()
+                axios.post(`${window.location.origin}/dashboard/upload-photo/`,{photo: photo}).then((res)=>{
+                    is_loading = false
+                    handleLoading()
+                    let response =  res.data
+                    $('#reset').trigger('click')
+                    $('#previous_image').attr('src', response.photo).show()
+                    $('#image_preview').attr('src', '')
+                })
+
+
+            }else{
+                is_loading = false
+                handleLoading()
+                $('#errorMassage').text('Please Upload Your Image Or Profile Photo')
+            }
+        })
+
+
+
+
+
+            ////////////////////////////////////////////////////////
 
         const getDistrict = (divishion_id, selected = null) => {
             axios.get(`${window.location.origin}/get-district/${divishion_id}`).then(res =>{
