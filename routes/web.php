@@ -40,15 +40,25 @@ ROUTE::get('get-thana/{thana_id}', [MyProfileController::class, 'getDivisionByTh
 
 
 route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
+
+
     Route::get('/admin', [BackEndController::class, 'index'])->name('Backend.index');
-    Route::resource('category', CategoryController::class);
-    Route::resource('tag', TagController::class);
     Route::get('get-subcategory/{id}', [SubCategoryController::class, 'getSubCategoryIdByCategoryId']);
-    Route::resource('sub_category', SubCategoryController::class);
     Route::resource('post', PostController::class);
     Route::resource('comment', CommentController::class);
     ROUTE::post('upload-photo', [MyProfileController::class, 'upload_photo']);
     Route::resource('myprofile', MyProfileController::class);
+
+    Route::group(['middleware'=>'admin'], static function(){
+        Route::resource('category', CategoryController::class);
+        Route::resource('tag', TagController::class);
+        Route::resource('sub_category', SubCategoryController::class);
+    });
+
+
+
+
+
 });
 
 Route::get('/dashboard', function () {

@@ -66,7 +66,7 @@
                     <h3 class="mb-0">Profile Photo</h3>
                 </div>
                 <div class="card-body">
-                    <img src="{{ asset('image/user/'.$profile->photo) }}" class="img-thumbnail" id="previous_image" style="{{ $profile->photo != null ? 'display:block' : 'display:none' }}">
+                    <img src="{{ asset('image/user/'.$profile?->photo) }}" class="img-thumbnail" id="previous_image" style="{{ $profile?->photo != null ? 'display:block' : 'display:none' }}">
                     <label for="" class="my-2">Upload Profile Photo</label>
                     <form action="">
                         <input type="file" id="image_input" class="form-control">
